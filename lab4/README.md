@@ -33,7 +33,7 @@ A minimal task board application built with TypeScript, HTML, and Tailwind CSS. 
    - Used for task organization
 
 4. **Observer Pattern**
-   - Implemented in TaskManager and ThemeManager
+   - Implemented in TaskManager
    - UI updates automatically when data changes
    - Loose coupling between data and presentation
    - Enables reactive updates

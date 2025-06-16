@@ -6,11 +6,10 @@ import { ThemeManager } from './managers/ThemeManager';
 document.addEventListener('DOMContentLoaded', () => {
     const taskBoard = new TaskBoard();
     const taskManager = TaskManager.getInstance();
-    const themeManager = ThemeManager.getInstance();
+    const _themeManager = ThemeManager.getInstance();
 
     // Attach the TaskBoard as an observer
     taskManager.attach(taskBoard);
-    themeManager.attach(taskBoard);
 
     // Initial render
     taskBoard.update();
