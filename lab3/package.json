@@ -1,0 +1,23 @@
+{
+  "name": "task-management-system",
+  "version": "1.0.0",
+  "description": "Task management system using Composite and Observer patterns",
+  "main": "dist/example.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/example.js",
+    "dev": "ts-node src/example.ts",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "dependencies": {
+    "typescript": "^4.9.5",
+    "ts-node": "^10.9.1",
+    "@types/node": "^18.15.11"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0"
+  }
+} 
