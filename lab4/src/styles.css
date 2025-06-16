@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.task-card {
+    @apply bg-white dark:bg-gray-700 p-4 rounded-lg shadow cursor-move;
+}
+
+.task-card.dragging {
+    @apply opacity-50;
+}
+
+.notification {
+    @apply fixed bottom-4 right-4 p-4 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300;
+}
+
+.notification.show {
+    @apply translate-y-0 opacity-100;
+}
+
+.notification.success {
+    @apply bg-green-500 text-white;
+}
+
+.notification.error {
+    @apply bg-red-500 text-white;
+} 

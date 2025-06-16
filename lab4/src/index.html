@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Task Board</title>
+    <link href="./styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Mini Task Board</h1>
+            <div class="flex gap-4 items-center">
+                <select id="sortSelect" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
+                    <option value="creationTime">Sort by Creation Time</option>
+                    <option value="alphabetical">Sort Alphabetically</option>
+                </select>
+                <button id="themeToggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button id="undoBtn" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">Undo</button>
+                <button id="redoBtn" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">Redo</button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">To Do</h2>
+                <div id="todo" class="min-h-[200px] space-y-2" data-column="todo"></div>
+                <button id="addTodo" class="mt-4 w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Add Task</button>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">In Progress</h2>
+                <div id="inProgress" class="min-h-[200px] space-y-2" data-column="inProgress"></div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Done</h2>
+                <div id="done" class="min-h-[200px] space-y-2" data-column="done"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="fixed bottom-4 right-4 p-4 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300"></div>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html> 
