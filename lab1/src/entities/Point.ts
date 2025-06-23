@@ -1,11 +1,12 @@
-export class Point {
-  public readonly id: string;
+import { Shape } from './Shape';
+
+export class Point extends Shape {
   public readonly x: number;
   public readonly y: number;
   public readonly z: number;
 
   constructor(id: string, x: number, y: number, z: number = 0) {
-    this.id = id;
+    super(id);
     this.x = x;
     this.y = y;
     this.z = z;

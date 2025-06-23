@@ -5,6 +5,8 @@ import { Triangle } from './entities/Triangle';
 import { Sphere } from './entities/Sphere';
 import { Point } from './entities/Point';
 import Logger from './utils/Logger';
+import { ShapeRepository, IdComparator, isInFirstQuadrant, areaInRange, volumeInRange, distanceFromOriginInRange } from './repositories/ShapeRepository';
+import { Warehouse } from './services/Warehouse';
 
 class GeometryApplication {
   public static async run(): Promise<void> {
@@ -15,6 +17,7 @@ class GeometryApplication {
       await this.demonstrateSphereCalculations();
 
       await this.demonstrateFileReading();
+      await this.demonstrateRepositoryAndWarehouse();
 
       Logger.info('Geometry Calculator Application completed successfully');
     } catch (error) {
@@ -133,6 +136,55 @@ class GeometryApplication {
     } catch (error) {
       Logger.warn(`File reading demo failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
       Logger.info('Make sure data files exist in the data/ directory');
+    }
+  }
+
+  private static async demonstrateRepositoryAndWarehouse(): Promise<void> {
+    Logger.info('=== Repository & Warehouse Demo ===');
+
+    const repo = new ShapeRepository();
+    const warehouse = Warehouse.getInstance();
+
+    Logger.info('Reading triangles from file...');
+    const triangles = FileReaderService.readTrianglesFromFile('triangles.txt');
+    for (const triangle of triangles) {
+      triangle.addObserver(warehouse);
+      repo.add(triangle);
+      warehouse.recalculate(triangle); // инициализация метрик
+    }
+
+    Logger.info('Reading spheres from file...');
+    const spheres = FileReaderService.readSpheresFromFile('spheres.txt');
+    for (const sphere of spheres) {
+      sphere.addObserver(warehouse);
+      repo.add(sphere);
+      warehouse.recalculate(sphere);
+    }
+
+    // Пример поиска: все фигуры в первом квадранте
+    const firstQuadrant = repo.findByCoordinates(isInFirstQuadrant);
+    Logger.info(`Shapes in first quadrant: ${firstQuadrant.map(s => s.id).join(', ')}`);
+
+    // Пример поиска: треугольники с площадью в диапазоне 5-10
+    const trianglesArea = repo.findByCoordinates(areaInRange(5, 10, id => warehouse.getMetrics(id)));
+    Logger.info(`Triangles with area 5-10: ${trianglesArea.map(s => s.id).join(', ')}`);
+
+    // Пример поиска: сферы с объемом в диапазоне 50-200
+    const spheresVolume = repo.findByCoordinates(volumeInRange(50, 200, id => warehouse.getMetrics(id)));
+    Logger.info(`Spheres with volume 50-200: ${spheresVolume.map(s => s.id).join(', ')}`);
+
+    // Пример поиска: объекты на расстоянии 0-10 от начала координат
+    const nearOrigin = repo.findByCoordinates(distanceFromOriginInRange(0, 10));
+    Logger.info(`Shapes near origin (0-10): ${nearOrigin.map(s => s.id).join(', ')}`);
+
+    // Пример сортировки по id
+    const sortedById = repo.sort(new IdComparator());
+    Logger.info(`All shapes sorted by id: ${sortedById.map(s => s.id).join(', ')}`);
+
+    // Пример получения метрик из Warehouse
+    for (const shape of sortedById) {
+      const metrics = warehouse.getMetrics(shape.id);
+      Logger.info(`Shape ${shape.id} metrics: ${JSON.stringify(metrics)}`);
     }
   }
 }
